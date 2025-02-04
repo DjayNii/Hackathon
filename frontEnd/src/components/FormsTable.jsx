@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Table, Container } from 'react-bootstrap';
 
-function FormsTable() {
-  const [forms, setForms] = useState([
-    {
-        id:1,
-      title: "My Name is king. Lol lol lol",
-      createdAt: "12:06",
-    },
-    {
-        id:2,
-      title: "My Name is king. Lol lol lol",
-      createdAt: "12:06",
-    }
-  ]);
+function FormsTable( {tableData} ) {
+  const [forms, setForms] = useState(
+    tableData.data
+  );
 
   return (
     
