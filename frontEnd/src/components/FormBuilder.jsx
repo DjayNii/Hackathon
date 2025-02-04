@@ -10,7 +10,12 @@ function FormBuilder() {
   const addQuestion = () => {
     setQuestions([
       ...questions,
-      { id: "", question: "", questionType: "shortAnswer", options: [""] },
+      {
+        id: Date.now(),
+        question: "",
+        questionType: "shortAnswer",
+        options: [""],
+      },
     ]);
   };
 
