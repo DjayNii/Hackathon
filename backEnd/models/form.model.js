@@ -2,18 +2,16 @@ const mongoose = require("mongoose");
 
 const formSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  description: { type: String },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
   },
   questions: [
     {
-      questionText: { type: String, required: true },
-      type: {
+      question: { type: String, required: true },
+      questionType: {
         type: String,
-        enum: ["mcq", "short_text", "dropdown", "long_text"],
+        enum: ["multipleChoice", "shortAnswer", "dropdown", "checkboxes"],
         required: true,
       },
       options: [{ type: String }], // Only used if type is MCQ or dropdown

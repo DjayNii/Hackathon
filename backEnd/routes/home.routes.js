@@ -18,4 +18,25 @@ router.get("/files", AuthMiddleWare, async (req, res) => {
   }
 });
 
+router.post("/forms", AuthMiddleWare, async (req, res) => {
+  try {
+    const { title, questions } = req.body.formData;
+
+    const newForm = new formModel({
+      title,
+      createdBy: req.user._id,
+      questions,
+    });
+
+    await newForm.save();
+
+    res
+      .status(201)
+      .json({ message: "Form created successfully", form: newForm });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 module.exports = router;
