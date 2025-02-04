@@ -3,10 +3,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
+import axios from "axios";
 
 function Signup() {
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -26,26 +27,39 @@ function Signup() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("User Signup Details:", formData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/register",
+        formData
+      );
+      setFormData({ name: "", email: "", password: "" });
+    } catch (error) {
+      console.log(error);
+    }
+
     // Add signup logic here
   };
 
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
-      <Card className="p-4 shadow-lg rounded" style={{ width: "100%", maxWidth: "400px" }}>
+      <Card
+        className="p-4 shadow-lg rounded"
+        style={{ width: "100%", maxWidth: "400px" }}
+      >
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
           <Form onSubmit={handleSubmit}>
-            {/* Username */}
-            <Form.Group className="mb-3" controlId="formBasicUsername">
-              <Form.Label>Username</Form.Label>
+            {/* name */}
+            <Form.Group className="mb-3" controlId="formBasicname">
+              <Form.Label>name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter username"
-                name="username"
-                value={formData.username}
+                placeholder="Enter name"
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 required
               />

@@ -8,7 +8,7 @@ router.get("/files", AuthMiddleWare, async (req, res) => {
     const forms = await formModel.find({
       createdBy: req.user._id,
     });
-
+    console.log(forms);
     res.json(forms);
   } catch (err) {
     console.error("Error finding forms:", err.message);

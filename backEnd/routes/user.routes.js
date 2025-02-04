@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
       email,
       password: hashPassword,
     });
-
+    console.log("user Found");
     res.json(user);
   } catch (err) {
     console.error("Error creating user:", err.message);

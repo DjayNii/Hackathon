@@ -3,12 +3,15 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   // Log form data every time it changes
   useEffect(() => {
@@ -25,25 +28,47 @@ function Login() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("User Login Details:", formData);
-    // Add authentication logic here
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/login",
+        formData,
+        {
+          withCredentials: true, // Ensures cookies are included
+        }
+      );
+
+      const token = response.data.token;
+      console.log(token);
+
+      // Save the token to localStorage with a key
+      localStorage.setItem("token", token);
+
+      // Navigate to the /home route
+      navigate("/home");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
-      <Card className="p-4 shadow-lg rounded" style={{ width: "100%", maxWidth: "400px" }}>
+      <Card
+        className="p-4 shadow-lg rounded"
+        style={{ width: "100%", maxWidth: "400px" }}
+      >
         <Card.Body>
           <h2 className="text-center mb-4">Login</h2>
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicUsername">
-              <Form.Label>Username</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasicname">
+              <Form.Label>name</Form.Label>
               <Form.Control
-                type="username"
-                placeholder="Enter username"
-                name="username"
-                value={formData.username}
+                type="name"
+                placeholder="Enter name"
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 required
               />
